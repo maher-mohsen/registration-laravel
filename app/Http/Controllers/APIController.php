@@ -11,67 +11,52 @@ class APIController extends Controller
     private $apiKey = "d3c745166amsh78848f479c8333ap1424c6jsn2af0c66fd7b1";
     private $apiHost = "online-movie-database.p.rapidapi.com";
 
-    public function getBornToday($birthdate) {
-        $curl = curl_init();
-        $day   = substr($birthdate, 5, 2);
+    public function getBornToday(Request $request)
+    {
+        $birthdate = $request->query('birthdate');
+        $day = substr($birthdate, 5, 2);
         $month = substr($birthdate, 8, 2);
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://online-movie-database.p.rapidapi.com/actors/v2/get-born-today?today=$month-$day&first=3",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => [
-                'X-RapidAPI-Host' => $this->apiHost,
-                'X-RapidAPI-Key' => $this->apiKey
-            ],
+
+        $response = Http::withHeaders([
+            'X-RapidAPI-Host' => $this->apiHost,
+            'X-RapidAPI-Key' => $this->apiKey,
+        ])->get($this->apiUrl, [
+            'today' => "$month-$day",
+            'first' => 3,
         ]);
-        
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
 
-        curl_close($curl);
+        if ($response->failed()) {
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+        }
 
-        if ($err) {
-            echo "cURL error #:" . $err;
-            return null;
+        $bornTodayIds = $response->json();
+        $actors = [];
+
+        if (isset($bornTodayIds['data']['bornToday'])) {
+            $edges = $bornTodayIds['data']['bornToday']['edges'];
+            foreach ($edges as $edge) {
+                $actorData = $this->getActorBio($edge['node']['id']);
+                $actors[] = $actorData['data']['name']['nameText']['text'];
+            }
+            return response()->json($actors);
         } else {
-            return json_decode($response, true);
+            return response()->json(['message' => 'No actors found born on this date.']);
         }
     }
 
-
-    public function getActorsBIO($actorID) {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://online-movie-database.p.rapidapi.com/actors/v2/get-bio?nconst=$actorID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => [
-                'X-RapidAPI-Host' => $this->apiHost,
-                'X-RapidAPI-Key' => $this->apiKey
-            ],
+    private function getActorBio($actorID)
+    {
+        $response = Http::withHeaders([
+            'X-RapidAPI-Host' => $this->apiHost,
+            'X-RapidAPI-Key' => $this->apiKey,
+        ])->get("https://online-movie-database.p.rapidapi.com/actors/v2/get-bio", [
+            'nconst' => $actorID,
         ]);
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL error #:" . $err;
-            return null;
-        } else {
-            return json_decode($response, true);
+        if ($response->failed()) {
+            throw new \Exception('Failed to fetch actor bio');
         }
-        
+
+        return $response->json();
     }
 }
-
