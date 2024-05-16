@@ -8,6 +8,11 @@
         // alerts
         "Request failed" => "La solicitud falló",
         "Please enter a birthdate." => "Por favor ingresa una fecha de nacimiento.",
+
+
+        "Please wait..." => "Espere por favor...",
+
+        "Actors born on the same day" => "Actores nacidas el mismo día"
     ];
 
 ?>

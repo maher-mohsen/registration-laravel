@@ -9,6 +9,10 @@
         "Request failed" => "Request failed",
         "Please enter a birthdate." => "Please enter a birthdate.",
         
+
+        "Please wait..." => "Please wait...",
+
+        "Actors born on the same day" => "Actors born on the same day"
     ];
 
 ?>

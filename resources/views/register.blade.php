@@ -63,3 +63,10 @@
 @push('scripts')
 <script src="{{ asset('js/register.js') }}"></script>
 @endpush
+
+<!--
+    Export localization for public JS
+-->
+<script>
+    var langDecorator = @json(array_merge(__('messages'), __('validation'), __('titles')));
+</script>

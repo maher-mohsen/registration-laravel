@@ -37,36 +37,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Full Name Validation
         if (full_name.trim() === "") {
-            full_name_error.textContent = "Full name is required";
+            full_name_error.textContent = langDecorator["Full name is required"];
             valid = false;
         }
 
         // Username Validation
         if (user_name.trim() === "") {
-            user_name_error.textContent = "Username is required";
+            user_name_error.textContent = langDecorator["Username is required"];
             valid = false;
         }
 
         // Birthdate Validation
         if (birthdate === "") {
-            birthdate_error.textContent = "Birthdate is required";
+            birthdate_error.textContent = langDecorator["Birthdate is required"];
             valid = false;
         } else {
             var today = new Date();
             var selectedDate = new Date(birthdate);
             var age = today.getFullYear() - selectedDate.getFullYear();
             if (age < 18) {
-                birthdate_error.textContent = "You must be at least 18 years old";
+                birthdate_error.textContent = langDecorator["You must be at least 18 years old"];
                 valid = false;
             }
         }
 
         // Phone Validation
         if (phone.trim() === "") {
-            phone_error.textContent = "Phone number is required";
+            phone_error.textContent = langDecorator["Phone number is required"];
             valid = false;
         } else if (!/^(?:\d{2}([-.])\d{3}\1\d{3}\1\d{3}|\d{11})$/.test(phone.trim())) {
-            phone_error.textContent = "Please enter a valid phone number!";
+            phone_error.textContent = langDecorator["Please enter a valid phone number!"];
             valid = false;
         }
   
@@ -74,40 +74,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Address Validation
         if (address.trim() === "") {
-            address_error.textContent = "Address is required";
+            address_error.textContent = langDecorator["Address is required"];
             valid = false;
         }
 
         // Password Validation
         if (password.length < 8) {
-            password_error.textContent = "Password must be at least 8 characters long";
+            password_error.textContent = langDecorator["Password must be at least 8 characters long"];
             valid = false;
         } else if (!/\d/.test(password)) {
-            password_error.textContent = "Password must contain at least one digit";
+            password_error.textContent = langDecorator["Password must contain at least one digit"];
             valid = false;
         } else if (!/[a-zA-Z]/.test(password)) {
-            password_error.textContent = "Password must contain at least one letter";
+            password_error.textContent = langDecorator["Password must contain at least one letter"];
             valid = false;
         } else if (!/[!@#$%^&*]/.test(password)) {
-            password_error.textContent = "Password must contain at least one special character";
+            password_error.textContent = langDecorator["Password must contain at least one special character"];
             valid = false;
         }
 
         // Confirm Password Validation
         if (confirm_password !== password) {
-            confirm_password_error.textContent = "Passwords do not match";
+            confirm_password_error.textContent = langDecorator["Passwords do not match"];
             valid = false;
         }
 
         // Email Validation
         if (!/^\S+@\S+\.\S+$/.test(email)) {
-            email_error.textContent = "Invalid email address";
+            email_error.textContent = langDecorator["Invalid email address"];
             valid = false;
         }
 
         // User Image Validation
         if (user_image.trim() === "") {
-            user_image_error.textContent = "User image is required";
+            user_image_error.textContent = langDecorator["User image is required"];
             valid = false;
         }
 
@@ -139,13 +139,13 @@ document.addEventListener("DOMContentLoaded", function() {
     messageContainer.innerHTML = `
         <div class='modal-content'>
             <div class='modal-header'>
-                <h5 class='modal-title'>Actors born on the same day</h5>
+                <h5 class='modal-title'>${langDecorator['Actors born on the same day']}</h5>
             </div>
             <div class='modal-body'>
-                <ul>${messages.length ? messages.map(message => `<li style='color:${color}'>${message}</li>`).join('') : `<li style='color:${color}'>No actors were found born on the same day.</li>`}</ul>
+                <ul>${messages.length ? messages.map(message => `<li style='color:${color}'>${message}</li>`).join('') : `<li style='color:${color}'>${langDecorator['No actors were found born on the same day.']}</li>`}</ul>
             </div>
             <div class='modal-footer'>
-                <button type='button' class='btn btn-secondary' id='toggleMessageBtn'>Hide Message</button>
+                <button type='button' class='btn btn-secondary' id='toggleMessageBtn'>${langDecorator['Hide Message']}</button>
             </div>
         </div>`;
 
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("messageContainer").style.visibility = "hidden"
         }
         
-        let btnText = document.getElementById("messageContainer").style.visibility == "hidden"? 'Show Message' : 'Hide Message';
+        let btnText = document.getElementById("messageContainer").style.visibility == "hidden"? langDecorator['Show Message'] : langDecorator['Hide Message'];
         this.textContent = btnText;
     });
 }
@@ -173,13 +173,13 @@ document.addEventListener("DOMContentLoaded", function() {
             if (birthdate) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'API_Ops.php?birthdate=' + encodeURIComponent(birthdate), true);
-                showMessages(["Please wait..."], "green");
+                showMessages([langDecorator["Please wait..."] ], "green");
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         // Assuming the response is a list of actor names
                         if(xhr.responseText.length === 0){
                             
-                            showMessages(["No Actors born on this date"], "black");
+                            showMessages([ langDecorator["No Actors born on this date"] ], "black");
                         }else{
                             showMessages(xhr.responseText.split(','), "black");
                         }
@@ -190,11 +190,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 };
                 xhr.onerror = function() {
-                    alert('Request failed');
+                    alert(langDecorator['Request failed']);
                 };
                 xhr.send();
             } else {
-                alert("Please enter a birthdate.");
+                alert(langDecorator["Please enter a birthdate."]);
             }
         }
    
