@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocalizationController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\APIController;
@@ -13,5 +14,6 @@ Route::post('/register', [RegistrationController::class, 'register'])->name('reg
 Route::get('/actors/born-today', [APIController::class, 'getBornToday']);
 
 
+Route::get('/locale/{lang}', [LocalizationController::class, 'setLocale']);
 
 
