@@ -181,11 +181,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         // Assuming the response is a list of actor names
-                        if(xhr.responseText.length === 0){
+                        if(xhr.responseText.length === 2){
                             
                             showMessages(["No Actors born on this date"], "black");
                         }else{
-                            showMessages(xhr.responseText.split(','), "black");
+                            
+                            showMessages(xhr.responseText.match(/"([^"]+)"/g).map(name => name.replace(/"/g, '')), "black");
                         }
                         
                         // alert('Actors born on this date: ' + xhr.responseText);
