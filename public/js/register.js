@@ -119,9 +119,37 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Attach validateForm function to the form submission event
-    document.getElementById("myForm").addEventListener("submit", validateForm);
-} );
+   // document.getElementById("myForm").addEventListener("submit", validateForm);
 
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', this.action, true);
+        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('input[name="_token"]').value);
+
+        var formData = new FormData(this);
+
+        showMessages(["Please wait..."], "green");
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Registration successful!');
+            } else if (xhr.status === 409) {
+                alert('Username already exists. Failed to register.');
+            } else if (xhr.status === 400) {
+                alert('Bad Request: Please check the data you have entered.');
+            } else {
+                alert('Error: ' + xhr.status);
+            }
+        };
+
+        xhr.onerror = function() {
+            alert('Request failed');
+        };
+
+        xhr.send(formData);
+    });
+} );
 
 
 

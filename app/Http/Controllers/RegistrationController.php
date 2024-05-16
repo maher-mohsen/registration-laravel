@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Validation\ValidationException;
+use Exception; // Import the Exception class if not already imported
 
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
@@ -18,9 +20,16 @@ class RegistrationController extends Controller
 
     public function register(RegistrationRequest $request)
     {
-        $validated = $request->validated();
+        
+        try {
+            $validated = $request->validated();
+            Log::debug('Debugging message.' . $validated);
+        } catch (ValidationException $e) {
+            Log::error('Validation failed: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred during registration.'], 409);
+        }
+        
 
-  
         $user = new User();
         $user->full_name = $validated['full_name'];
         $user->user_name = $validated['user_name'];
@@ -36,11 +45,22 @@ class RegistrationController extends Controller
             $user->image = $path;
         }
 
-        if ($user->save()) {
+
+        try{
+            $user->save();
             return response()->json(['message' => 'Registration successful!'], 200);
-        } else {
-            return response()->json(['message' => 'An error occurred during registration.'], 500);
+        }catch(Exception $e){
+            return response()->json(['message' => 'An error occurred during registration.'], 409);
         }
+
+
+        // if ($user->save()) {
+        //     Log::info('User registered successfully: ' . $user->id);
+
+        //     return response()->json(['message' => 'Registration successful!'], 200);
+        // } else {
+        //     return response()->json(['message' => 'An error occurred during registration.'], 409);
+        // }
     }
 }
 
