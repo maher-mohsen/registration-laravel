@@ -36,7 +36,7 @@ class RegistrationController extends Controller
 
         if ($request->hasFile('user_image')) {
             $image = $request->file('user_image');
-            $path = $image->store('uploads');
+            $path = $image->store('uploads', 'public');
             $user->image = $path;
         }
 
