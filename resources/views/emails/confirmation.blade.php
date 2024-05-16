@@ -71,7 +71,7 @@
             <body>
                 <div class="container">
                     <div class="logo">
-                        <img src="https://i.imgur.com/vHFavbh.png" alt="DeEnigma">
+                        <img src="https://i.imgur.com/YDZCkjy.png" alt="DeEnigma">
                     </div>
                     <div class="content">
                         <h2>Thank you for registering with DeEnigma!</h2>
