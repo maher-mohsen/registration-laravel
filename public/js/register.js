@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         // Assuming the response is a list of actor names
-                        if(xhr.responseText === 'setting language[]'){
+                        if(xhr.responseText.length === 2){
                             
                             showMessages([ langDecorator["No Actors born on this date"] ], "black");
                         }else{

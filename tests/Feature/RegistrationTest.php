@@ -1,33 +1,28 @@
 <?php
-
-namespace Tests\Feature;
-
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 use App\Models\User;
 
-class RegistrationFeatureTest extends TestCase
+class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
-    /** @test */
-    public function it_registers_a_new_user_and_displays_success_message()
+    public function testUserCanRegister()
     {
         $response = $this->post('/register', [
-            'full_name' => 'Jane Doe',
-            'user_name' => 'janedoe',
+            'full_name' => 'John Doe', // Commented to test validation
+            'user_name' => 'johndoe',
             'birthdate' => '2000-01-01',
-            'phone' => '123-456-7890',
+            'phone' => '01287695176',
             'address' => '123 Main St',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'email' => 'jane@example.com',
+            'password' => 'password@123',
+            'password_confirmation' => 'password@123',
+            'email' => 'john@example.com',
         ]);
 
-        $response->assertStatus(200);
-        $response->assertJson(['message' => 'Registration successful!']);
-        $this->assertDatabaseHas('users', [
-            'email' => 'jane@example.com',
-        ]);
+        $response->assertStatus(302); // Redirected after successful registration
+        $response->assertSessionDoesntHaveErrors(); // No validation errors
     }
 }

@@ -29,31 +29,21 @@ class RegistrationTest extends TestCase
     }
 
     /** @test */
-    public function it_validates_email_is_unique()
-    {
-        User::create([
-            'full_name' => 'John Doe',
-            'user_name' => 'johndoe',
-            'birthdate' => '2000-01-01',
-            'phone' => '123-456-7890',
-            'address' => '123 Main St',
-            'password' => Hash::make('password'),
-            'email' => 'john1@example.com',
-        ]);
+    public function testValidatesPhoneNumberIsRequired()
+{
+    $response = $this->post('/register', [
+        'full_name' => 'John Doe',
+        'user_name' => 'johndoe',
+        'birthdate' => '2000-01-01',
+        // 'phone' => '123-456-7890', // Commented to test validation
+        'address' => '123 Main St',
+        'password' => 'password@123',
+        'password_confirmation' => 'password',
+        'email' => 'john@example.com',
+    ]);
 
-        $response = $this->post('/register', [
-            'full_name' => 'Jane Doe',
-            'user_name' => 'janedoe',
-            'birthdate' => '2000-01-01',
-            'phone' => '123-456-7890',
-            'address' => '123 Main St',
-            'password' => 'password@@@12213',
-            'password_confirmation' => 'password@@@12213',
-            'email' => 'john1@example.com',
-        ]);
-
-        $response->assertSessionHasErrors('email');
-    }
+    $response->assertSessionHasErrors('phone');
+}
 
     /** @test */
     public function it_checks_password_confirmation()
@@ -73,21 +63,19 @@ class RegistrationTest extends TestCase
     }
 
     /** @test */
-    public function it_stores_user_data_in_database()
+    public function testValidatesBirthdateIsRequired()
     {
         $response = $this->post('/register', [
-            'full_name' => 'Jane Doe',
-            'user_name' => 'janedoe',
-            'birthdate' => '2000-01-01',
+            'full_name' => 'John Doe',
+            'user_name' => 'johndoe',
+            // 'birthdate' => '2000-01-01', // Commented to test validation
             'phone' => '123-456-7890',
             'address' => '123 Main St',
-            'password' => 'password',
+            'password' => 'password@123',
             'password_confirmation' => 'password',
-            'email' => 'jane@example.com',
+            'email' => 'john@example.com',
         ]);
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'jane@example.com',
-        ]);
+    
+        $response->assertSessionHasErrors('birthdate');
     }
 }

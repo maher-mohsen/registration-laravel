@@ -18,7 +18,6 @@ class LocalizationMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        echo "setting language";
 
         $locale = Session::get('locale') ?? 'en';
         Session::put('locale',$locale);
