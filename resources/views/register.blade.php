@@ -3,7 +3,33 @@
 <link href="{{ asset('css/register.css') }}" rel="stylesheet">
 @endpush
 
+
+
 @section('content')
+
+        <!-- Display Session Messages -->
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- Display Validation Errors -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
     <form method="post" enctype="multipart/form-data" id="myForm" action="{{ route('register.submit') }}" >
         @csrf

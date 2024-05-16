@@ -115,41 +115,91 @@ document.addEventListener("DOMContentLoaded", function() {
             event.preventDefault();
         }
 
-        return valid;
+        if (valid) {
+            var formData = new FormData();
+            formData.append("full_name", full_name);
+            formData.append("user_name", user_name);
+            formData.append("birthdate", birthdate);
+            formData.append("phone", phone);
+            formData.append("address", address);
+            formData.append("password", password);
+            formData.append("password_confirmation", confirm_password);
+            formData.append("email", email);
+            formData.append("user_image", user_image);
+
+            fetch("{{ route('register.submit') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                },
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw response;
+                }
+            })
+            .then(data => {
+                // Handle success
+                alert("Registration successful!");
+                // You can also redirect the user or clear the form here
+            })
+            .catch(async (response) => {
+                // Handle errors
+                if (response.status === 422) { // Validation error
+                    const errorData = await response.json();
+                    const errors = errorData.errors;
+                    for (let key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                            document.getElementById(`${key}_error`).textContent = errors[key][0];
+                        }
+                    }
+                } else if(response.status === 409) {
+                    alert("Email or Username is already exist.");
+                }
+            });
+        }
     }
 
     // Attach validateForm function to the form submission event
-   // document.getElementById("myForm").addEventListener("submit", validateForm);
+   
+    
+    
+    // Attach validateForm function to the form submission event
+   document.getElementById("myForm").addEventListener("submit", validateForm);
 
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', this.action, true);
-        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('input[name="_token"]').value);
+    // document.getElementById('myForm').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST', this.action, true);
+    //     xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('input[name="_token"]').value);
 
-        var formData = new FormData(this);
+    //     var formData = new FormData(this);
 
-        showMessages(["Please wait..."], "green");
+    //     showMessages(["Please wait..."], "green");
 
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                alert('Registration successful!');
-            } else if (xhr.status === 409) {
-                alert('Username already exists. Failed to register.');
-            } else if (xhr.status === 400) {
-                alert('Bad Request: Please check the data you have entered.');
-            } else {
-                alert('Error: ' + xhr.status);
-            }
-        };
+    //     xhr.onload = function() {
+    //         if (xhr.status === 200) {
+    //             alert('Registration successful!');
+    //         } else if (xhr.status === 409) {
+    //             alert('Username already exists. Failed to register.');
+    //         } else if (xhr.status === 400) {
+    //             alert('Bad Request: Please check the data you have entered.');
+    //         } else {
+    //             alert('Error: ' + xhr.status);
+    //         }
+    //     };
 
-        xhr.onerror = function() {
-            alert('Request failed');
-        };
+    //     xhr.onerror = function() {
+    //         alert('Request failed');
+    //     };
 
-        xhr.send(formData);
-    });
-} );
+    //     xhr.send(formData);
+    // });
+}
+ );
 
 
 

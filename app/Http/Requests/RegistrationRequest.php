@@ -23,6 +23,7 @@ class RegistrationRequest extends FormRequest
             'email' => 'required|string|email|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
+        
     }
 }
 
