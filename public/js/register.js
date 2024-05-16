@@ -120,7 +120,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Attach validateForm function to the form submission event
     document.getElementById("myForm").addEventListener("submit", validateForm);
-});
+} );
+
+
+
+
 
         function showMessages(messages, color) {
     // Create or retrieve the message container

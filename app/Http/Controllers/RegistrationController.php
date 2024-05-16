@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
@@ -14,10 +15,12 @@ class RegistrationController extends Controller
     {
         return view('register');
     }
+
     public function register(RegistrationRequest $request)
     {
         $validated = $request->validated();
 
+  
         $user = new User();
         $user->full_name = $validated['full_name'];
         $user->user_name = $validated['user_name'];
@@ -32,13 +35,12 @@ class RegistrationController extends Controller
             $path = $image->store('uploads');
             $user->image = $path;
         }
-        
+
         if ($user->save()) {
             return response()->json(['message' => 'Registration successful!'], 200);
-            
-
         } else {
             return response()->json(['message' => 'An error occurred during registration.'], 500);
         }
     }
 }
+

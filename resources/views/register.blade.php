@@ -2,9 +2,9 @@
 @push('styles')
 <link href="{{ asset('css/register.css') }}" rel="stylesheet">
 @endpush
+
 @section('content')
-<div class="container">
-    <h1>Registration Form</h1>
+
     <form method="post" enctype="multipart/form-data" id="myForm" action="{{ route('register.submit') }}" >
         @csrf
         <div class="form-group">
