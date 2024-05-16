@@ -20,7 +20,7 @@ class RegistrationRequest extends FormRequest
             'phone' => ['required', 'regex:/^(?:\d{2}([-.])\d{3}\1\d{3}\1\d{3}|\d{11})$/'],
             'address' => 'required|string|max:255',
            'password' => 'required|string|min:8|confirmed',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
         

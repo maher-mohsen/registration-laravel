@@ -20,7 +20,7 @@ class RegistrationTest extends TestCase
             'birthdate' => '2000-01-01',
             'phone' => '123-456-7890',
             'address' => '123 Main St',
-            'password' => 'password',
+            'password' => 'password@123',
             'password_confirmation' => 'password',
             'email' => 'john@example.com',
         ]);
@@ -38,7 +38,7 @@ class RegistrationTest extends TestCase
             'phone' => '123-456-7890',
             'address' => '123 Main St',
             'password' => Hash::make('password'),
-            'email' => 'john@example.com',
+            'email' => 'john1@example.com',
         ]);
 
         $response = $this->post('/register', [
@@ -47,9 +47,9 @@ class RegistrationTest extends TestCase
             'birthdate' => '2000-01-01',
             'phone' => '123-456-7890',
             'address' => '123 Main St',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'email' => 'john@example.com',
+            'password' => 'password@@@12213',
+            'password_confirmation' => 'password@@@12213',
+            'email' => 'john1@example.com',
         ]);
 
         $response->assertSessionHasErrors('email');
