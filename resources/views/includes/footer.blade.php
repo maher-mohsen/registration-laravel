@@ -1,6 +1,6 @@
 <footer>
     <div class="container text-center">
-        &copy; 2024 Registration. All rights reserved.
+        &copy; @lang('titles.2024 Registration. All rights reserved.')
     </div>
 </footer>
 @push('styles')
