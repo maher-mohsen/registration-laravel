@@ -6,10 +6,12 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Http\Controllers\mailer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+require "mailer.php";
 class RegistrationController extends Controller
 {
     public function showForm()
@@ -42,11 +44,13 @@ class RegistrationController extends Controller
 
         try {
             $user->save();
+            sendConfromationMail($validated['email']);
             return redirect()->route('register.form')->with('success', 'Registration successful!');
         } catch (QueryException $e) {
             return redirect()->route('register.form')->with('error', 'Email or Username is already exist.')->withInput();
         }
     }
+
 }
 
 
