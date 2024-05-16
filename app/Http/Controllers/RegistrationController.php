@@ -47,7 +47,7 @@ class RegistrationController extends Controller
             sendConfromationMail($validated['email']);
             return redirect()->route('register.form')->with('success', 'Registration successful!');
         } catch (QueryException $e) {
-            return redirect()->route('register.form')->with('error', 'Email or Username is already exist.')->withInput();
+            return redirect()->route('register.form')->with('error', 'Email is already exist.')->withInput();
         }
     }
 
