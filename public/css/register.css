@@ -1,0 +1,123 @@
+/* Base styles */
+.hidden {
+    display: none;
+}
+.error {
+    color: red;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header{
+    .navbar {
+        background-color: #333 !important;
+    }
+    .navbar-dark .navbar-brand {
+        color: #fff !important;
+    }
+    .navbar-dark .navbar-nav .nav-link {
+        color: #fff !important;
+    }
+    .navbar-dark .navbar-toggler-icon {
+        background-color: #333 !important;
+    }
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 3px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+form {
+    display: grid;
+    grid-gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+button[type="button"] {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button[type="button"]:hover {
+    background-color: #555;
+}
+
+/* Responsive styles */
+
+@media only screen and (max-width: 768px) {
+    main {
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    form {
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+    }
+}
+
