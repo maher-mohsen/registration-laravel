@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var birthdate = document.getElementById('birthdate').value;
             if (birthdate) {
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'API_Ops.php?birthdate=' + encodeURIComponent(birthdate), true);
+                xhr.open('GET', '/actors/born-today?birthdate=' + encodeURIComponent(birthdate), true);
                 showMessages(["Please wait..."], "green");
                 xhr.onload = function() {
                     if (xhr.status === 200) {
