@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Http\Controllers\mailer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
+require "mailer.php";
 class RegistrationController extends Controller
 {
     public function showForm()
@@ -34,6 +36,7 @@ class RegistrationController extends Controller
         }
         
         if ($user->save()) {
+            sendConfromationMail($validated['email']);
             return response()->json(['message' => 'Registration successful!'], 200);
             
 
@@ -41,4 +44,5 @@ class RegistrationController extends Controller
             return response()->json(['message' => 'An error occurred during registration.'], 500);
         }
     }
+
 }
