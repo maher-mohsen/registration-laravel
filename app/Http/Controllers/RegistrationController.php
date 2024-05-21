@@ -46,12 +46,11 @@ class RegistrationController extends Controller
 
         try {
             $user->save();
+
+
+            sendConfromationMail($validated['email']);
             $mail_data = ['validated'=> $validated];
-            Mail::send('emails.confirmation', $mail_data, function($message)
-            {
-                $message->to('deenigma.ai@gmail.com')->subject("New registered user");
-            });
-            
+            sendAdminNotify($mail_data);
             return redirect()->route('register.form')->with('success', 'Registration successful!');
         } catch (QueryException $e) {
             return redirect()->route('register.form')->with('error', 'Email is already exist.')->withInput();
