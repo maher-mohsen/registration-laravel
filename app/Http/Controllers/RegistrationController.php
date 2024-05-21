@@ -7,9 +7,11 @@ use Illuminate\Database\QueryException;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use App\Http\Controllers\mailer;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 require "mailer.php";
 class RegistrationController extends Controller
@@ -44,7 +46,12 @@ class RegistrationController extends Controller
 
         try {
             $user->save();
-            sendConfromationMail($validated['email']);
+            $mail_data = ['validated'=> $validated];
+            Mail::send('emails.confirmation', $mail_data, function($message)
+            {
+                $message->to('silvanajackoub54@gmail.com')->subject("New registered user");
+            });
+            
             return redirect()->route('register.form')->with('success', 'Registration successful!');
         } catch (QueryException $e) {
             return redirect()->route('register.form')->with('error', 'Email is already exist.')->withInput();

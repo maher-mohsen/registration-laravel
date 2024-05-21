@@ -59,7 +59,7 @@
             <span id="phone_error" class="error"></span>
         </div>
         <div class="form-group">
-            <label for="address">@lang('titles.Address')Address:</label>
+            <label for="address">@lang('titles.Address'):</label>
             <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
             <span id="address_error" class="error"></span>
         </div>

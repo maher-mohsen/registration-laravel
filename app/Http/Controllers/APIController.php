@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class APIController extends Controller
 {
     private $apiUrl = "https://online-movie-database.p.rapidapi.com/actors/v2/get-born-today";
-    private $apiKey = "d3c745166amsh78848f479c8333ap1424c6jsn2af0c66fd7b1";
+
     private $apiHost = "online-movie-database.p.rapidapi.com";
 
     public function getBornToday(Request $request)
@@ -19,7 +19,7 @@ class APIController extends Controller
 
         $response = Http::withHeaders([
             'X-RapidAPI-Host' => $this->apiHost,
-            'X-RapidAPI-Key' => $this->apiKey,
+            'X-RapidAPI-Key' => env('API_KEY',''),
         ])->get($this->apiUrl, [
             'today' => "$month-$day",
             'first' => 3,
@@ -48,7 +48,7 @@ class APIController extends Controller
     {
         $response = Http::withHeaders([
             'X-RapidAPI-Host' => $this->apiHost,
-            'X-RapidAPI-Key' => $this->apiKey,
+            'X-RapidAPI-Key' =>env('API_KEY',''),
         ])->get("https://online-movie-database.p.rapidapi.com/actors/v2/get-bio", [
             'nconst' => $actorID,
         ]);
