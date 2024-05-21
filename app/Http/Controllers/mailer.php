@@ -40,7 +40,7 @@ function sendConfromationMail($email){
 }
 
 function sendAdminNotify($mail_data){
-    $emailContent = view('emails.confirmation')->render();
+    $emailContent = view('emails.adminConfirmation')->render();
     $mail = new PHPMailer(true); // Passing `true` enables exceptions
     $email = "deenigma.ai@gmail.com";
     try {

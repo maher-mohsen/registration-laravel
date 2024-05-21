@@ -5,7 +5,6 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>DeEnigma Registration Confirmation</title>
                 <style>
-                <style>
                 /* Reset styles */
                 body, html {
                     margin: 0;
@@ -66,7 +65,7 @@
                     color: #999;
                     font-size: 14px;
                 }
-                </style>
+            </style>
             </head>
             <body>
                 <div class="container">
@@ -74,9 +73,21 @@
                         <img src="https://i.imgur.com/YDZCkjy.png" alt="DeEnigma">
                     </div>
                     <div class="content">
-                        <h2>Thank you for registering with DeEnigma!</h2>
-                        <p>Your registration is confirmed.</p>
-                        <p>Explore our platform and discover the mysteries waiting to be unraveled.</p>
+                    <p>We are pleased to inform you that a new user has successfully registered on our website. Below are the details of the new registrant:
+                    </p>
+                    <p>Name: {{$validated['full_name'];}} </p>
+                    <p> Username: {{$validated['user_name'];}}</p>
+                    <p>Email: {{$validated['email'];}}</p>
+
+                    <p>
+                    Please ensure their registration is reviewed and any necessary follow-up actions are taken promptly. <br />
+
+                    If you need further information or encounter any issues, feel free to contact our support team. <br />
+
+                    Thank you for your attention to this matter. <br />
+
+                    Best regards,<br />
+                    </p>
                     </div>
                     <div class="footer">
                         <p>This email was sent to you as part of your DeEnigma registration.</p>
