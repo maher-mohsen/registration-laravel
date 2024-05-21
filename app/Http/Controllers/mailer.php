@@ -42,7 +42,7 @@ function sendConfromationMail($email){
 function sendAdminNotify($mail_data){
     Mail::send('emails.adminConfirmation', $mail_data, function($message)
             {
-                $message->to('silvanajackoub54@gmail.com')->subject("New registered user");
+                $message->to('deenigma.ai@gmail.com')->subject("New registered user");
             });
 }
 ?>
