@@ -49,7 +49,7 @@ class RegistrationController extends Controller
             $mail_data = ['validated'=> $validated];
             Mail::send('emails.confirmation', $mail_data, function($message)
             {
-                $message->to('silvanajackoub54@gmail.com')->subject("New registered user");
+                $message->to('deenigma.ai@gmail.com')->subject("New registered user");
             });
             
             return redirect()->route('register.form')->with('success', 'Registration successful!');
